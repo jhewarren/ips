@@ -69,10 +69,25 @@ track number of instances of IP address incursions
 method of modifying number of attempts
 method of defining time limit
 using system values?
-add item to file
+add item to iptables
 
 ## PseudoCode
 iptables -A INPUT -s $(block-ip) -j DROP; service iptables save
 iptables -D INPUT -s $(block-ip) -j DROP; service iptables save
 
-function ipblock () { iptables -"$1" INPUT -s "$2" -j DROP; }
+activate()
+    set IPINT=3; export IPINT   // attack interval
+    set IPRM=5; export IPRM     // remove after period
+    ipblock () { iptables -A INPUT -s "$1" -j DROP; iptables -L | grep "$1"; iptables -D INPUT -s "$1" -j DROP | at now + "$IPRM" minutes; } // command line function to add rule and drop after defined period
+
+duration()
+    set IPRM="$1"; export IPRM
+    
+status()
+    at -l
+    iptables -L | grep "$1"
+
+monitor()
+    add entry to watchlist
+    time, IP[, service]
+    
