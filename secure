@@ -405,4 +405,8 @@ Mar  7 20:22:30 localhost unix_chkpwd[20600]: password check failed for user (ro
 Mar  7 20:22:30 localhost sshd[20592]: pam_succeed_if(sshd:auth): requirement "uid >= 1000" not met by user "root"
 Mar  7 20:22:32 localhost sshd[20592]: Failed password for root from 192.168.0.12 port 52456 ssh2
 Mar  7 20:22:32 localhost sshd[20592]: Connection closed by authenticating user root 192.168.0.12 port 52456 [preauth]
+Mar  7 20:22:32 localhost sshd[20592]: Failed password for root from 192.168.0.15 port 52456 ssh2
+Mar  7 20:22:32 localhost sshd[20592]: Failed password for root from 192.168.0.14 port 52456 ssh2
+Mar  7 20:22:32 localhost sshd[20592]: Failed password for root from 192.168.0.14 port 52456 ssh2
+Mar  7 20:22:32 localhost sshd[20592]: Failed password for root from 192.168.0.12 port 52456 ssh2
 Mar  7 20:22:32 localhost sshd[20592]: PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.0.12  user=root
