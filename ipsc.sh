@@ -3,7 +3,7 @@
 PWD=`/usr/bin/pwd`
 
 if [ $1 -eq "1" ]; then
-    rfrq="*/2"
+    rfrq="*/1"
 else
     rfrq="*/$1"
 fi

@@ -37,9 +37,10 @@ fcat () {
 }
 
 ipblock () {
-    iptables -A INPUT -s "$1" -j DROP;
-    iptables -D INPUT -s "$1" -j DROP | at now +"$bdur" minutes; 
-    iptables -L | grep "$1" >> droplog;
+    $IPT -A INPUT -s "$1" -j DROP;
+    $IPT -L | grep "$1" >> droplog;
+    echo "$IPT -D INPUT -s $1 -j DROP" | at now +"$bdur" minutes;
+    $IPT -L | grep "$1" >> droplog;
 }
 
 fcat | sort |  uniq -c | while read line; do
@@ -48,7 +49,7 @@ fcat | sort |  uniq -c | while read line; do
 	fbip=${flds[1]}
 	fsvc=${flds[2]}
     echo $fbip
-	abip=`iptables -L | grep $fbip | wc -l`
+	abip=`$IPT -L | grep $fbip | wc -l`
 	if [ $ffrq -ge $ipqt ] && [ $abip -eq 0 ]  ; then
 		ipblock $fbip
 	fi
