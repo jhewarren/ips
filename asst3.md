@@ -20,7 +20,7 @@ Your application will obtain user input for the following parameters:
  - The number of attempts before blocking the IP
  - The time limit for blocking the IP. The default setting will be block indefinitely.
  - Monitor a log file of user’s choice (Optional - bonus). Keep in mind that different log files have different formats.
-Your application will be activated through the crontab. 
+Your application will be activated through the crontab.
 
 ## To Be Submitted:
 Hand in complete and well-documented design work and the firewall script.
@@ -33,13 +33,13 @@ Submit a zip file containing all the code and documents as described below in th
 (1). Design/Documentation: / 5
 (2). Functionality: / 30
 (3). Testing: / 15
-Total: / 50 
+Total: / 50
 
 # Specification
 monitor /var/log/secure file
 detect password guessing
 use IP tables to block IP
-allow user specified parameters (#attempts, blocked-time[, **additional-log-files)
+allow user specified parameters (#attempts, blocked-time[, additional-log-files)
 over-threshold=>generate, activate rule
 if time limit; flush after time limit exceeded
 design test procedures
@@ -52,7 +52,7 @@ monitor 'log' file for outside activity
  - what to look for
  - where to look
 add rule to block IP
- - 
+ -
 add cron job to remove rule after N secs/minutes/hours
 
 macro level
@@ -78,11 +78,11 @@ iptables -D INPUT -s $(block-ip) -j DROP; service iptables save
 activate()
     set IPINT=3; export IPINT   // attack interval
     set IPRM=5; export IPRM     // remove after period
-    ipblock () { iptables -A INPUT -s "$1" -j DROP; iptables -L | grep "$1"; iptables -D INPUT -s "$1" -j DROP | at now + "$IPRM" minutes; } // command line function to add rule and drop after defined period
+    ipblock () { iptables -A INPUT -s "$1" -j DROP; iptables -L | grep "$1"; `iptables -D INPUT -s "$1" -j DROP | at now + "$IPRM" minutes`; } // command line function to add rule and drop after defined period
 
 duration()
     set IPRM="$1"; export IPRM
-    
+
 status()
     at -l
     iptables -L | grep "$1"
@@ -91,4 +91,10 @@ monitor()
     add entry to watchlist
     time, IP[, service]
 
-if date_time +
+# Testing
+test multiple entries
+test with slow scan
+test single instances
+
+# usage
+./ipsc.sh [check-frequency] [number] [test-period] [lockout-duration]

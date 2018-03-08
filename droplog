@@ -1,2 +1,5 @@
-DROP       all  --  192.168.0.12         anywhere            
-DROP       all  --  192.168.0.12         anywhere            
+DROP       all  --  192.168.0.5          anywhere            
+DROP       all  --  192.168.0.5          anywhere            
+DROP       all  --  192.168.0.5          anywhere            
+DROP       all  --  192.168.0.5          anywhere            
+DROP       all  --  192.168.0.5          anywhere            

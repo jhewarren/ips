@@ -1,7 +1,9 @@
 #!/bin/bash
 
-#TFILE="/var/log/secure"
-TFILE="secure"
+TFILE="/var/log/secure"
+IPT="/usr/sbin/iptables"
+DTX='/usr/bin/date'
+#TFILE="secure"
 TSVC="ssh"
 TAGO=15
 EMSG="Failed password"
@@ -14,15 +16,13 @@ ipqt="$1"
 atpr="$2"
 bdur="$3"
 
-rm droplog
-
 lcat () {
     cat "$TFILE" | grep "$TSVC" | grep "$EMSG";
 }
 
 fcat () {
 
-    cdt=`date +%s -d"$TAGO hours ago"`
+    cdt=`date +%s -d"$atpr minutes ago"`
 
     lcat | while read line; do
         flds=($line)
@@ -37,18 +37,19 @@ fcat () {
 }
 
 ipblock () {
-	iptables -A INPUT -s "$1" -j DROP
-	iptables -D INPUT -s "$1" -j DROP | at now + "$bdur" minutes
-	iptables -L | grep "$1" >> droplog
+    iptables -A INPUT -s "$1" -j DROP;
+    iptables -D INPUT -s "$1" -j DROP | at now +"$bdur" minutes; 
+    iptables -L | grep "$1" >> droplog;
 }
 
 fcat | sort |  uniq -c | while read line; do
-	flds=($line) 
+	flds=($line)
         ffrq=${flds[0]}
 	fbip=${flds[1]}
 	fsvc=${flds[2]}
+    echo $fbip
 	abip=`iptables -L | grep $fbip | wc -l`
-	if [ $ffrq -ge 3 ] && [ $abip -eq 0 ]  ; then
+	if [ $ffrq -ge $ipqt ] && [ $abip -eq 0 ]  ; then
 		ipblock $fbip
 	fi
 done
